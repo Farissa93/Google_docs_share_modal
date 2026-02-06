@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Docs Share Dialog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- Share Dialog Modal -->
+    <div class="modal-container" id="shareModal">
+        <div class="modal-header">
+            <h2>Share "Untitled document"</h2>
+            <div class="header-icons">
+                <div class="help-menu-container">
+                    <button class="icon-btn" id="helpBtn" data-tooltip="Support">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <div class="help-dropdown" id="helpDropdown">
+                        <div class="help-menu-item">Help</div>
+                        <div class="help-menu-item">Send feedback to Google</div>
+                    </div>
+                </div>
+                <button class="icon-btn" data-tooltip="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- add People Section -->
+        <div class="add-people-section">
+            <div class="add-people-input-wrapper">
+                <div class="add-people-avatar" id="addPeopleAvatar" aria-hidden="true"></div>
+                <input 
+                    type="text" 
+                    class="add-people-input" 
+                    id="addPeopleInput"
+                    placeholder="Add people, groups, spaces, and calendar events"
+                >
+            </div>
+            <div class="email-suggestions" id="emailSuggestions"></div>
+        </div>
+
+        <!-- People with Access Section -->
+        <div class="people-section">
+            <h3>People with access</h3>
+            <div class="people-list" id="peopleList">
+                <div class="person-item">
+                    <div class="person-avatar">F</div>
+                    <div class="person-info">
+                        <p class="person-name">Farissa Tafannum (you)</p>
+                        <p class="person-email">farissa.tafannum4@gmail.com</p>
+                    </div>
+                    <span class="person-role-label">Owner</span>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Link Sharing Section -->
+        <div class="link-sharing-section">
+            <h3>General access</h3>
+            <div class="access-hover-group">
+                <div class="access-row">
+                    <div class="access-icon" id="accessIcon" aria-hidden="true">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="access-content">
+                        <div class="access-trigger-wrapper">
+                            <button class="access-trigger" id="accessTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="access-trigger-label" id="accessTriggerLabel">Restricted</span>
+                                <i class="fas fa-caret-down access-trigger-caret" aria-hidden="true"></i>
+                            </button>
+                            <div class="access-menu" id="accessMenu" role="listbox" aria-labelledby="accessTriggerLabel">
+                                <button type="button" class="access-option active" data-value="restricted" data-description="Only people with access can open with the link" role="option" aria-selected="true">
+                                    <span class="access-option-check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="access-option-text">Restricted</span>
+                                </button>
+                                <button type="button" class="access-option" data-value="anyone" data-description="Anyone on the internet with the link can view" role="option" aria-selected="false">
+                                    <span class="access-option-check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="access-option-text">Anyone with the link</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="access-description" id="accessDescription">
+                            Only people with access can open with the link
+                        </div>
+                    </div>
+                    <div class="access-permission" id="accessPermissionContainer">
+                        <div class="permission-trigger-wrapper">
+                            <button class="permission-trigger" id="permissionTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="permission-trigger-label" id="permissionTriggerLabel">Viewer</span>
+                                <i class="fas fa-caret-down permission-trigger-caret" aria-hidden="true"></i>
+                            </button>
+                            <div class="permission-menu" id="permissionMenu" role="listbox" aria-labelledby="permissionTriggerLabel">
+                                <div class="permission-menu-label" aria-hidden="true">Role</div>
+                                <button type="button" class="permission-option active" data-value="viewer" role="option" aria-selected="true">
+                                    <span class="permission-option-check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="permission-option-text">Viewer</span>
+                                </button>
+                                <button type="button" class="permission-option" data-value="commenter" role="option" aria-selected="false">
+                                    <span class="permission-option-check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="permission-option-text">Commenter</span>
+                                </button>
+                                <button type="button" class="permission-option" data-value="editor" role="option" aria-selected="false">
+                                    <span class="permission-option-check" aria-hidden="true"><i class="fas fa-check"></i></span>
+                                    <span class="permission-option-text">Editor</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- General Access Section 
+        <div class="general-access-section">
+            <div class="section-label">General access</div>
+
+            <div class="general-access-row">
+                <div class="general-access-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <div class="general-access-content">
+                    <div class="general-access-top">
+                        <select class="access-dropdown" id="accessDropdown" aria-label="General access scope">
+                            <option value="restricted">Restricted</option>
+                            <option value="anyone">Anyone with the link</option>
+                        </select>
+                    </div>
+
+                    <div class="access-description" id="accessDescription">
+                        Only people with access can open with the link
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+
+        <!-- Action Buttons -->
+        <div class="modal-footer">
+            <button class="copy-link-footer-btn" id="copyLinkFooterBtn">
+                <i class="fas fa-link"></i> Copy link
+            </button>
+            <button class="done-btn" id="doneBtn">Done</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toastNotification">Link copied</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
